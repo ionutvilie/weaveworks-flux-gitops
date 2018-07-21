@@ -26,7 +26,7 @@ Flux is configured to connect to this repository, on the dev branch.
 kubectl apply -f 01-k8s-traefik-ingress
 # create developer namespace
 kubectl apply -f 02-k8s-namespace
-# edit deploy flux deployment and add your own repo / branch
+# edit flux deployment and add your own repo / branch
 kubectl apply -f 03-k8s-flux-deploy
 # optional if you do not want to use flux
 # kubectl apply -f 04-k8s-proxy-traefik-ingress
