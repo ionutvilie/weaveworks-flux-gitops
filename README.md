@@ -2,20 +2,14 @@
 
 A boilerplate for minikube, with [weaveworks flux](https://github.com/weaveworks/flux/) and two [traefik](https://traefik.io/)'s managing both incoming ingress and internal kubernetes traffic (path redirection).
 
+You can configure it for your own needs and start build scalable services.
+
 Known problems:
 
 * it misses a way to rename kubernetes developer namespace - plan to fix later.
 * images below are not aligned.
 
-## Minikube Boilerplate Set-Up
-
 ![minikube boilerplate](assets/minikube-boilerplate.png)
-
-## Flux set-up
-
-Flux is configured to connect to this repository, on the dev branch.
-
-![flux](assets/flux.png)
 
 ## Installation guide
 
@@ -46,3 +40,21 @@ reliability-pp:deployment/flux               flux       quay.io/weaveworks/flux:
 reliability-pp:deployment/memcached          memcached  memcached:1.4.25               ready
 reliability-pp:deployment/reliability-proxy  proxy      traefik:v1.6.5-alpine          ready
 ```
+
+## Flux set-up
+
+Flux is configured to connect to this repository, on the dev branch.
+
+![traefik reverse proxy](assets/flux.png)
+
+## Traefik kubernetes ingress
+
+Manages all traffic received by kubernetes. If it corresponds to a rule it is forwarded to a service. In current case, the second traefik deployment, if it does not have any rules it will respond with 404s.
+
+![traefik reverse proxy](assets/traefik-cname.png)
+
+## Traefik kubernetes ingress-internal
+
+Manages all traffic received for a cname, if it has a rule for the received path, traffic will get fw-ed to the service, if not you get 404s.
+
+![traefik reverse proxy](assets/traefik-revproxi.png)
