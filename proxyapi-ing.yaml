@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: reliability-pp-proxyapi
+  namespace: reliability-pp
+  annotations:
+    kubernetes.io/ingress.class: traefik #kubernetes-cluster traffic 
+spec:
+  rules:
+  - host: reliability-pp-proxyapi.minikube
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: proxyapi
+          servicePort: 80
