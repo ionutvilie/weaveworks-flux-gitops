@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: reliability-pp-external
+  namespace: reliability-pp
+  annotations:
+    kubernetes.io/ingress.class: traefik #kubernetes-cluster traffic 
+spec:
+  rules:
+  - host: reliability-pp.minikube
+    http:
+      paths:
+      - path: 
+        backend:
+          serviceName: proxy
+          servicePort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: reliability-pp-internal
+  namespace: reliability-pp
+  annotations:
+    kubernetes.io/ingress.class: traefik-internal  # inside-kubernetes-cluster traffic // path redirection
+    traefik.frontend.rule.type: PathPrefix
+spec:
+  rules:
+  - host: reliability-pp.minikube
+    http:
+      paths:
+      - backend:
+          serviceName: restmonkey
+          servicePort: 80
+        path: /restmonkey
+      - backend:
+          serviceName: proxyapi
+          servicePort: 80
+        path: /
+      - backend:
+          serviceName: proxyapi
+          servicePort: 80
+        path: /dashboard         # for fun only ! - disable in a live env

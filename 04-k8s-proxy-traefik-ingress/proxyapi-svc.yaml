@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxyapi
+  namespace: reliability-pp
+  labels:
+    name: proxyapi
+    team: "sre"
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    service: proxy
+  sessionAffinity: None
